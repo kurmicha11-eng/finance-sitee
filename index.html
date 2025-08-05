@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Финансовая грамотность</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #f0f0f0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        header {
+            background-color: #1a1a1a;
+            padding: 15px 10px;
+            text-align: center;
+            border-bottom: 3px solid #2E8B57;
+        }
+        
+        h1 {
+            color: #2E8B57;
+            margin-bottom: 10px;
+            font-size: clamp(24px, 5vw, 32px);
+            text-shadow: 0 0 5px rgba(46, 139, 87, 0.5);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+            background-color: #1e1e1e;
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #2E8B57;
+        }
+        
+        .tab-btn {
+            background-color: #2E8B57;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: clamp(14px, 3vw, 16px);
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: bold;
+            flex: 1 1 auto;
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .tab-btn:hover {
+            background-color: #3CB371;
+            transform: translateY(-2px);
+        }
+        
+        .tab-btn.active {
+            background-color: #3CB371;
+            box-shadow: 0 0 10px rgba(60, 179, 113, 0.7);
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid #2E8B57;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        h2 {
+            color: #3CB371;
+            margin-bottom: 15px;
+            font-size: clamp(20px, 5vw, 28px);
+            text-align: center;
+            text-shadow: 0 0 5px rgba(60, 179, 113, 0.3);
+        }
+        
+        h3 {
+            color: #3CB371;
+            margin: 20px 0 12px;
+            font-size: clamp(18px, 4vw, 22px);
+            border-left: 4px solid #3CB371;
+            padding-left: 8px;
+        }
+        
+        p {
+            margin-bottom: 12px;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+        
+        .highlight {
+            background-color: #2E8B57;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+        
+        .warning {
+            color: #FF6B6B;
+            font-weight: bold;
+        }
+        
+        .tip {
+            color: #3CB371;
+            font-size: clamp(16px, 3.5vw, 18px);
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            padding: 12px;
+            background-color: rgba(46, 139, 87, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #3CB371;
+        }
+        
+        .money {
+            color: #3CB371;
+            font-weight: bold;
+            font-size: clamp(16px, 3.5vw, 18px);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 15px;
+            background-color: #1a1a1a;
+            margin-top: 25px;
+            border-top: 3px solid #2E8B57;
+        }
+        
+        .footer-text {
+            color: #3CB371;
+            font-size: clamp(16px, 3.5vw, 18px);
+            font-weight: bold;
+        }
+        
+        .green-box {
+            background-color: rgba(46, 139, 87, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px solid #2E8B57;
+        }
+        
+        .experience-box {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px dashed #3CB371;
+            position: relative;
+        }
+        
+        .experience-title {
+            color: #3CB371;
+            font-weight: bold;
+            font-size: clamp(18px, 4vw, 20px);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .experience-text {
+            font-style: italic;
+            line-height: 1.6;
+            font-size: clamp(14px, 3vw, 16px);
+        }
+
+        /* Медиазапросы для дополнительной адаптации */
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .tab-btn {
+                padding: 8px 12px;
+                min-width: 80px;
+            }
+            
+            .tab-content {
+                padding: 15px;
+            }
+            
+            .green-box, .experience-box {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .tabs {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .tab-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>💰 Финансовая грамотность</h1>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('tab1')">Заработок</button>
+            <button class="tab-btn" onclick="openTab('tab2')">Траты</button>
+            <button class="tab-btn" onclick="openTab('tab3')">Накопления</button>
+        </div>
+        
+        <div id="tab1" class="tab-content active">
+            <!-- Содержимое вкладки "Заработок" -->
+            <h2>1️⃣ Способы заработка для подростков</h2>
+            
+            <div class="green-box">
+                <h3>📌 По закону РФ</h3>
+                <ul>
+                    <li><strong>С 14 лет</strong> — можно работать с согласия родителей и органов опеки.</li>
+                    <li><strong>До 14 лет</strong> — только в сфере искусства, спорта или рекламы (кино, театр, рекламные съемки).</li>
+                </ul>
+            </div>
+            
+            <h3>💻 Онлайн-заработок (без вложений)</h3>
+            <ul>
+                <li><span class="highlight">Клики, опросы</span> (Seosprint, Vktarget) — <span class="money">50–300₽/день</span></li>
+                <li><span class="highlight">Админ в соцсетях</span> — ведение групп, чатов (<span class="money">1000–3000₽/мес</span>)</li>
+                <li><span class="highlight">Рисование/монтаж</span> — продажа артов, мемов (Fiverr, заказы в ВК)</li>
+            </ul>
+            
+            <h3>🏠 Оффлайн (с разрешения родителей)</h3>
+            <ul>
+                <li><span class="highlight">Выгул собак</span> — <span class="money">50–200₽/раз</span></li>
+                <li><span class="highlight">Репетиторство</span> — если хорошо знаешь предмет</li>
+                <li><span class="highlight">Хендмейд</span> — браслеты, открытки (продажа через Авито)</li>
+            </ul>
+            
+            <h3>🎮 На хобби</h3>
+            <ul>
+                <li><span class="highlight">Стримы</span> (Twitch/YouTube) — донаты</li>
+                <li><span class="highlight">Фотостоки</span> (Shutterstock) — продажа снимков природы</li>
+            </ul>
+            
+            <div class="experience-box">
+                <div class="experience-title">Мой личный опыт</div>
+                <div class="experience-text">
+                    "Еще можно найти в своем городе подработку 'Промоутер' - как по мне, самое легкое. Набрал листовок с другом, и работаете весь день. За день можно заработать ~1500 рублей. Но есть и несколько минусов. 1 - Для начала работы тебе выдают заданную область, в которой постепенно заканчиваются дома, и приходиться проходить заного весь маршрут, что бы расклеить оставшиеся листовки. 2 - оплата не сразу. Для того что бы получить деньги, сначала нужно будет подождать пока проверят отчет, потом нужно будет приходить в офис, и там уже говоришь номер карты и тебе переводят твои деньги."
+                </div>
+            </div>
+            
+            <div class="green-box">
+                <h3>⚠ Важно:</h3>
+                <ul>
+                    <li class="warning">Не ведись на скам («вложи 1000₽ – получи 5000₽»)</li>
+                    <li>Выводи деньги только через родителей</li>
+                    <li>Учеба важнее — не жертвуй школой ради копеек</li>
+                </ul>
+            </div>
+            
+            <p class="tip">💡 Самый простой старт: <span class="highlight">Опросы + хендмейд</span> → даже <span class="money">100–200₽/день</span> уже результат!</p>
+        </div>
+        
+        <div id="tab2" class="tab-content">
+            <h2>2️⃣ Правила разумных трат</h2>
+            
+            <div class="green-box">
+                <h3>📌 Основные принципы:</h3>
+                <ol>
+                    <li><strong>Не спусти всё сразу</strong> – чипсы, донаты и модную одежду. Деньги улетают быстро, а толку мало.</li>
+                    <li><strong>Раздели на 3 части:</strong>
+                        <ul>
+                            <li><span class="money">50%</span> → копилка (неприкосновенный запас).</li>
+                            <li><span class="money">30%</span> → полезное (книги, курсы, инструменты).</li>
+                            <li><span class="money">20%</span> → на радости (но без фанатизма).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Не ведись на "халяву"</strong> – «вложи 1000₽ → получи 5000₽» = <span class="warning">развод</span>.</li>
+                </ol>
+            </div>
+            
+            <h3>💳 Финансовые инструменты</h3>
+            <ul>
+                <li><span class="highlight">Детские карты</span> (СберKids, Тинькофф Junior)</li>
+                <li><span class="highlight">Накопительный счет</span> (родители помогут открыть)</li>
+                <li><span class="highlight">Копилка-сейф</span> (чтобы не было соблазна)</li>
+            </ul>
+            
+            <h3>📝 Планирование покупок</h3>
+            <ul>
+                <li>Составь список желаемого с ценами</li>
+                <li>Расставь приоритеты (что нужнее)</li>
+                <li>Посчитай, сколько нужно откладывать ежемесячно</li>
+            </ul>
+            
+            <p class="tip">💸 Главное: деньги должны работать на тебя, а не ты на них.</p>
+        </div>
+        
+        <div id="tab3" class="tab-content">
+            <h2>3️⃣ Система накоплений</h2>
+            
+            <div class="green-box">
+                <h3>📌 5 шагов к успеху:</h3>
+                <ol>
+                    <li><strong>Поставь цель</strong> → не «просто коплю», а <span class="highlight">«телефон за 30к» / «велосипед за 15к»</span>.</li>
+                    <li><strong>Автоматизируй</strong> → откладывай <span class="money">10–30%</span> сразу после заработка.</li>
+                    <li><strong>Правило 50/30/20:</strong>
+                        <ul>
+                            <li><span class="money">50%</span> → на цель (не трогать!).</li>
+                            <li><span class="money">30%</span> → на полезное (книги, курсы).</li>
+                            <li><span class="money">20%</span> → на радости (без чувства вины).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Запрети себе:</strong>
+                        <ul>
+                            <li>«Одну шоколадку…» → <span class="money">100₽/день = 3000₽/мес</span>.</li>
+                            <li>«Куплю сейчас, потом верну…» → <span class="warning">не вернешь</span>.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Где хранить?</strong>
+                        <ul>
+                            <li><span class="highlight">Наличные</span> → конверт с надписью «НЕ ТРОГАТЬ».</li>
+                            <li><span class="highlight">Карта</span> → накопительный счет (проценты капают).</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            
+            <h3>📊 Пример накоплений</h3>
+            <ul>
+                <li>При зарплате <span class="money">5000₽/мес</span>:
+                    <ul>
+                        <li><span class="money">2500₽</span> → копилка</li>
+                        <li><span class="money">1500₽</span> → полезное</li>
+                        <li><span class="money">1000₽</span> → удовольствия</li>
+                    </ul>
+                </li>
+                <li>Телефон за <span class="money">30к</span> → накопить за <span class="highlight">1 год</span> (по 2500₽/мес)</li>
+            </ul>
+            
+            <p class="tip">💡 Секрет: Чем больше зарабатываешь → тем быстрее достигаешь целей!</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p class="footer-text">🚀 Начни управлять финансами правильно уже сегодня!</p>
+    </footer>
+    
+    <script>
+        function openTab(tabId) {
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            
+            const tabBtns = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < tabBtns.length; i++) {
+                tabBtns[i].classList.remove('active');
+            }
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
